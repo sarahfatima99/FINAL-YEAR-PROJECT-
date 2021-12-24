@@ -1,0 +1,31 @@
+.interface.column{
+    background-color: aqua;
+    width: 70%;
+    float:right;
+}
+
+.menu.column{
+
+width: 30%; 
+float: left;
+
+}
+
+
+.row{
+    display: block;
+}
+
+.form_builder .nav-sidebar { 
+    width: 100%;
+    padding: 8px 0; 
+    border-right: 1px solid #ddd;
+}
+
+
+.form_builder .nav-sidebar .active a { 
+    cursor: default;
+    background-color: #428bca; 
+    color: #fff; 
+    text-shadow: 1px 1px 1px #666; 
+}
