@@ -68,6 +68,9 @@ export default () => {
       <PrimaryLink  href="/signup">
         Log in
       </PrimaryLink>
+      <PrimaryLink style={{marginLeft:"10px"}}  href="/createform">
+         Create Form
+      </PrimaryLink>
     </NavLink>
   ];
 

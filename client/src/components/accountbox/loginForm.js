@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import {  useNavigate } from 'react-router-dom';
 import {
   BoldLink,
   BoxContainer,
@@ -15,8 +16,7 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
-import axios from "axios";
-
+import axios, { Axios } from "axios";
 
 
 const LoginForm = () => {
@@ -29,6 +29,9 @@ const LoginForm = () => {
 
   })
 
+
+  const navigate = useNavigate();
+  const [loginStatus,setLogininStatus]=useState(false)
 
 
   const handleChange = e => {
@@ -43,12 +46,44 @@ const LoginForm = () => {
       [name]: value
     })
   }
+  const userAuthenticated=()=>{
+    
+
+    axios.get("http://localhost:9000/isUserAuth",{headers:{
+      "x-access-token":localStorage.getItem("token")
+      
+
+    },
+  }
+
+  )
+    .then((response)=>
+    console.log(response)
+    )
+
+    navigate('/')
+  }
 
   const login = () => {
     axios.post("http://localhost:9000/login", user)
-      .then(res => alert(res.data.message))
+    .then((res)=>{
+      if(!res.data.auth){
+        setLogininStatus(false)
+      }
+      else{
+        console.log(res.data)
+        localStorage.setItem("token",res.data.token)
+        localStorage.setItem("userinfo",res.data.result)
+        setLogininStatus(true)
+        userAuthenticated()
+
+      }
+    })
+      // .then(res => alert(res.data.message))
 
   }
+
+ 
 
 
   return (
@@ -61,6 +96,7 @@ const LoginForm = () => {
       <MutedLink href="#">Forget your password?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
       <SubmitButton type="submit" onClick={login}>Signin</SubmitButton>
+      {/* {loginStatus && <button onClick={userAuthenticated}> check if auth</button>} */}
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         Don't have an account?{" "}

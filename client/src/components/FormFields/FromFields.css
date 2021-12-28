@@ -1,47 +1,50 @@
+form {
+  margin: 10px 290px;
+  width: 362px;
+  padding: 25px;
+  background: #f1f1f1;
+  border: 1px solid #e5e5e5;
+ 
+}
+form  div {
+  position: relative;
+  margin: 0 0 1.5em;
+}
+label {
+  display: inline-block;
+  width: 100%;
+  border: black;
+
+  position: relative;
+  margin: 0 0 .5em;
+ 
+  font-weight: bold;
+  color: #222;
+}
+
+input {
+  border-style: solid;
+  padding:10px;
+  border-width: thick;
 
 
-  .form-inline {  
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-  }
+  margin: 0;
+  cursor: pointer;
+  vertical-align: bottom;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 1px;
+  box-sizing: border-box;
+  position: relative;}
 
-  .form-inline label {
-    margin: 5px 10px 5px 0;
-  }
 
-  .form-inline input {
-    vertical-align: middle;
-    margin: 5px 10px 5px 0;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-  }
-
-  .button-section {
-    margin: 3%;
-  }
   .button {
-    padding: 10px 20px;
-    background-color: dodgerblue;
-    border: 1px solid #ddd;
+    background-color: #614caf; /* Green */
+    border: none;
     color: white;
-    cursor: pointer;
-  }
-
-  .button:hover {
-    background-color: royalblue;
-  }
-
-  .remove {
-    background-color: rgb(192, 53, 53);
-  }
-  .remove:hover {
-    background-color: rgb(187, 43, 43);
-  }
-
-
-
-  .singleline.container{
-    background-color: aquamarine;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
   }
