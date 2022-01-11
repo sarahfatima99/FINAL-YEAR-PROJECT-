@@ -10,6 +10,7 @@ export const SingleLine = () => {
 
     return (
         <div>
+            <center>
             <form onSubmit=
                 {e =>
                     e.preventDefault()
@@ -22,13 +23,14 @@ export const SingleLine = () => {
                             cols="15"
                             enabled="true"
                             value={label}
+                            placeholder='Enter Question' 
                             onChange={handleChange} /> :
                         <lable>
                             {label}
                         </lable>
                 }
-                <br />
-                <input placeholder='enter text' />
+                <br style={{margin: "5px"}} />
+                <input placeholder='Enter Answer'/>
                 <br />
             
                 <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
@@ -39,6 +41,7 @@ export const SingleLine = () => {
                     }
                 </button>
             </form>
+            </center>
         </div>
     );
 
@@ -47,6 +50,11 @@ export const SingleLine = () => {
 }
 
 export const RadioButton = () => {
+
+
+
+
+
 
     const [options, setOptions] = useState([])
     const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
@@ -75,45 +83,32 @@ export const RadioButton = () => {
 
     return (
         <div>
+            <center>
             <form onSubmit={e => e.preventDefault()}>
 
                 {
                     editable ?
-                        <input type="textarea" rows="44"
+                        <input type="textarea" rows="44" style={{margin:"5px"}}
                             cols="15"
                             value={label}
-                            placeholder="enter your lable"
+                            placeholder="Enter your Question "
                             onChange={handleChange}
                         /> :
                         <lable>
                             {label}
                         </lable>
                 }
-            
-
-                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
-                    {
-                        editable ?
-                            <p > done</p> :
-                            <p >  edit</p>
-                    }
-
-
-
-                </button>
-
-
                 {
                     optionsList != null ?
 
                         optionsList.map((item, key) => {
                             return (
-                                <div>
+                                <div style={{display:"flex",alignItems:"center" ,justifyContent:"space-around"}}>
                                     <input type="radio"
                                         id="css"
                                         name="fav_language"
                                         value="CSS" />
-                                    <label for="css">
+                                    <label  for="css">
                                         {item.name}
                                     </label>
                                     <br />
@@ -121,18 +116,31 @@ export const RadioButton = () => {
                         }) : null
 
                 }
+               
                 {
                     options ?
-                        <input type="textarea"
+                    <center>
+                        <input  style={{margin:"5px" ,textAlign:"center"}} type="textarea" placeholder='Enter Options'
                             rows="44"
                             cols="15"
                             onKeyDown={handleKeyDown}
-                        /> :
+                        /> 
+                        </center>:
                         null
                 }
-                <button onClick={() => setOptions(true)}>add options</button>
-            </form>
+                {/* <button onClick={() => setOptions(true)}>Add Options</button> */}
+                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+                    {
+                        editable ?
+                            <p  style={{margin:"5px",textAlign:"right"}} > Done</p> :
+                            <p  style={{margin:"5px",textAlign:"right"}}>  Edit Question</p>
+                    }
 
+
+
+                </button>
+            </form>
+            </center>
         </div>
     )
 }
@@ -140,32 +148,107 @@ export const RadioButton = () => {
 export const TextMultiLine = () => {
 
     return (
-
+        <center>
         <form>
-            <label>Enter yourname:
-
-            </label>
-            <input type="textarea" rows="14" cols="15" />
+        <input type="textarea" rows="14" cols="15" placeholder='Enter Question' />
+            <input type="textarea" rows="14" cols="15" placeholder='Enter Answer' />
 
         </form>
+        </center>
 
     )
 }
 
 export const SingleChoiceAllVisible = () => {
-    return (
-        <form>
-            <label for="pet-select">Choose a pet:</label>
+    const [options, setOptions] = useState([])
+    const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
+    const [optionsList, setOptionsList] = useState([])
+    const [label, setLabel] = useState()
+    const [editable, setEditable] = useState(true)
+    const [count, setCount] = useState(true);
+    const handleChange = e => {
+        setLabel(e.target.value)
+    }
 
-            <select name="pets" id="pet-select">
-                <option value="">--Please choose an option--</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-                <option value="spider">Spider</option>
-                <option value="goldfish">Goldfish</option>
-            </select>
-        </form>
+    const handleKeyDown = e => {
+        if (e.key == 'Enter') {
+            // setOptions(false)
+
+            setOptionsList([...optionsList,
+            {
+                name: e.target.value
+            }])
+            e.target.value=""
+            console.log(optionsList)
+        }
+
+    }
+
+
+    return (
+        <div>
+            <center>
+            <form onSubmit={e => e.preventDefault()}>
+
+                {
+                    editable ?
+                        <input type="textarea" rows="44" style={{margin:"5px"}}
+                            cols="15"
+                            value={label}
+                            placeholder="Enter your Question "
+                            onChange={handleChange}
+                        /> :
+                        <lable>
+                            {label}
+                        </lable>
+                }
+                {
+                    optionsList != null ?
+
+                        optionsList.map((item, key) => {
+                            return (
+                                <div style={{display:"flex",alignItems:"center" ,justifyContent:"space-around"}}>
+                                   <ol id='css' name="fav_language" value="CSS">
+                                   
+                                       </ol> 
+                                    {/* <input type="radio"
+                                        id="css"
+                                        name="fav_language"
+                                        value="CSS" /> */}
+                                  
+                                  <label  for="css">
+                                        {item.name}
+                                    </label>
+                                    <br />
+                                </div>)
+                        }) : null
+
+                }
+               
+                {
+                    options ?
+                    <center>
+                        <input  style={{margin:"5px" ,textAlign:"center"}} type="textarea" placeholder='Enter Options'
+                            rows="44"
+                            cols="15"
+                            onKeyDown={handleKeyDown}
+                        /> 
+                        </center>:
+                        null
+                }
+                {/* <button onClick={() => setOptions(true)}>Add Options</button> */}
+                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+                    {
+                        editable ?
+                            <p  style={{margin:"5px",textAlign:"right"}} >Done</p> :
+                            <p  style={{margin:"5px",textAlign:"right"}}> Edit Question</p>
+                    }
+
+
+
+                </button>
+            </form>
+            </center>
+        </div>
     )
 }
