@@ -1,11 +1,46 @@
 import React, { useState } from 'react'
 import './FromFields.css'
-export const SingleLine = () => {
+import axios from 'axios'
+export const SingleLine = (props) => {
     const [label, setLabel] = useState()
     const [editable, setEditable] = useState(true)
+    const [question, setQuestion] = useState()
     const [count, setCount] = useState(true);
     const handleChange = e => {
         setLabel(e.target.value)
+
+    }
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
     }
 
     return (
@@ -13,25 +48,25 @@ export const SingleLine = () => {
             <form onSubmit=
                 {e =>
                     e.preventDefault()
-                }>
-
-                {
-                    editable ?
-                        <input type="textarea"
-                            rows="44"
-                            cols="15"
-                            enabled="true"
-                            value={label}
-                            onChange={handleChange} /> :
-                        <lable>
-                            {label}
-                        </lable>
                 }
+            >
+                {editable ?
+                    <input type="textarea"
+                        rows="44"
+                        cols="15"
+                        enabled="true"
+                        value={label}
+                        onChange={handleChange} /> :
+                    <lable>
+                        {label}
+                    </lable>
+                }
+
                 <br />
                 <input placeholder='enter text' />
                 <br />
-            
-                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+
+                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
                     {
                         editable ?
                             <p > done</p> :
@@ -46,8 +81,8 @@ export const SingleLine = () => {
 
 }
 
-export const RadioButton = () => {
-
+export const RadioButton = (props) => {
+    const [question, setQuestion] = useState()
     const [options, setOptions] = useState([])
     const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
     const [optionsList, setOptionsList] = useState([])
@@ -58,6 +93,42 @@ export const RadioButton = () => {
         setLabel(e.target.value)
     }
 
+
+
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
+    }
+
     const handleKeyDown = e => {
         if (e.key == 'Enter') {
             // setOptions(false)
@@ -66,13 +137,11 @@ export const RadioButton = () => {
             {
                 name: e.target.value
             }])
-            e.target.value=""
+            e.target.value = ""
             console.log(optionsList)
         }
 
     }
-
-
     return (
         <div>
             <form onSubmit={e => e.preventDefault()}>
@@ -89,20 +158,19 @@ export const RadioButton = () => {
                             {label}
                         </lable>
                 }
-            
 
-                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+
+                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
                     {
                         editable ?
-                            <p > done</p> :
+                            <p > done</p>
+                            :
                             <p >  edit</p>
                     }
 
 
 
                 </button>
-
-
                 {
                     optionsList != null ?
 
@@ -119,7 +187,6 @@ export const RadioButton = () => {
                                     <br />
                                 </div>)
                         }) : null
-
                 }
                 {
                     options ?
@@ -137,7 +204,10 @@ export const RadioButton = () => {
     )
 }
 
-export const TextMultiLine = () => {
+
+
+
+export const TextMultiLine = (prpos) => {
 
     return (
 
@@ -152,20 +222,125 @@ export const TextMultiLine = () => {
     )
 }
 
-export const SingleChoiceAllVisible = () => {
-    return (
-        <form>
-            <label for="pet-select">Choose a pet:</label>
+export const SingleChoiceAllVisible = (props) => {
 
-            <select name="pets" id="pet-select">
-                <option value="">--Please choose an option--</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
-                <option value="parrot">Parrot</option>
-                <option value="spider">Spider</option>
-                <option value="goldfish">Goldfish</option>
-            </select>
-        </form>
+    const [question, setQuestion] = useState()
+    const [options, setOptions] = useState([])
+    const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
+    const [optionsList, setOptionsList] = useState([])
+    const [label, setLabel] = useState()
+    const [editable, setEditable] = useState(true)
+    const [count, setCount] = useState(true);
+    const handleChange = e => {
+        setLabel(e.target.value)
+    }
+
+
+
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
+    }
+
+    const handleKeyDown = e => {
+        if (e.key == 'Enter') {
+            // setOptions(false)
+
+            setOptionsList([...optionsList,
+            {
+                name: e.target.value
+            }])
+            e.target.value = ""
+            console.log(optionsList)
+        }
+
+    }
+    return (
+        <div>
+            <form onSubmit={e => e.preventDefault()}>
+
+                {
+                    editable ?
+                        <input type="textarea" rows="44"
+                            cols="15"
+                            value={label}
+                            placeholder="enter your lable"
+                            onChange={handleChange}
+                        /> :
+                        <lable>
+                            {label}
+                        </lable>
+                }
+
+
+                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
+                    {
+                        editable ?
+                            <p > done</p>
+                            :
+                            <p >  edit</p>
+                    }
+
+                </button>
+
+                <select>
+
+                    {
+                        optionsList != null ?
+
+                            optionsList.map((item, key) => {
+                                return (
+
+
+
+                                        <option value="volvo">{item.name}</option>
+                                  
+                                )
+                            }) : null
+                    }
+
+                </select>
+                {
+                    options ?
+                        <input type="textarea"
+                            rows="44"
+                            cols="15"
+                            onKeyDown={handleKeyDown}
+                        /> :
+                        null
+                }
+                <button onClick={() => setOptions(true)}>add options</button>
+            </form>
+
+        </div>
     )
 }

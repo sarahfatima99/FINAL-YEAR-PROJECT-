@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 
 var sql = require("mssql");
 const e = require('connect-flash');
-// var request = new sql.Request();
+
 // config for your database
 var config = {
     user: 'sarah',
@@ -43,26 +43,34 @@ app.get("/", (req, res) => {
 })
 
 app.post("/register", (req, res) => {
-    ;
-    // console.log(req.body);
+    var request = new sql.Request()
     bcrypt.hash(req.body.password, 10).then((hash) => {
-        var request = new sql.Request()
+
         const name = req.body.name
         const email = req.body.email
         const password = hash
+
         request.query(`select * from  [Hyperian].[dbo].[Users] where Email = 
         '${email}'`, function (err, recordset) {
-            console.log(recordset);
-            if (recordset['recordset'][0]) {
+
+            if (err) {
+                console.log(err)
+            }
+            else if (recordset['recordset'][0]) {
                 res.send({ message: "user already registered" })
             }
             else {
-                request.query(`INSERT INTO [Hyperian].[dbo].[Users] VALUES ('${name}', '${email}','${password}')`, function (err, recordset) {
+                request.query(`INSERT INTO [Hyperian].[dbo].[Users] OUTPUT Inserted.ID  VALUES ('${name}', '${email}','${password}')`, function (err, recordset) {
+                    console.log(recordset)
+                    if (err) {
+                        console.log(err)
+                    }
 
-                    if (err) console.log(err)
+                    else {
+                        res.send({ message: "user registered", user_id: recordset['recordset'][0]['ID'] })
+                    }
 
 
-                    res.send({ message: "user registered" })
 
                 });
 
@@ -71,6 +79,9 @@ app.post("/register", (req, res) => {
 
     })
 })
+
+
+
 
 const verifyJWT = (req, res, next) => {
     const token = req.headers["x-access-token"]
@@ -94,6 +105,29 @@ const verifyJWT = (req, res, next) => {
 }
 
 
+
+app.post('/form', (req, res) => {
+    var request = new sql.Request()
+    const user_id = req.body.user_id;
+    console.log("user_id:", req.body.user_id)
+    request.query(`INSERT INTO [Hyperian].[dbo].[Form] (User_id) OUTPUT Inserted.Form_id VALUES('${user_id}')`, function (err, recordset) {
+
+        if (err) {
+            console.log(err)
+
+            res.send({ message: "Form registered FAILED" })
+        }
+        else {
+
+
+            res.send({ message: "Form registered", form_id: recordset['recordset'][0]['Form_id'] })
+            console.log(recordset)
+        }
+    });
+
+})
+
+
 app.get('/isUserAuth', verifyJWT, (req, res) => {
     res.send('Authenticated')
 })
@@ -101,14 +135,17 @@ app.get('/isUserAuth', verifyJWT, (req, res) => {
 
 
 
-app.post("/login", (req, res) => {
 
-    var request = new sql.Request();
+
+app.post("/login", (req, res) => {
+    var request = new sql.Request()
     const {
         email,
         password
     } = req.body
-    console.log(email)
+    var id = 0;
+    var form_id = 0;
+
     request.query(`select * from  [Hyperian].[dbo].[Users] where Email = '${email}'`, function (err, recordset) {
 
         if (recordset['recordset'][0]) {
@@ -118,13 +155,14 @@ app.post("/login", (req, res) => {
                 if (err)
                     throw err
                 if (results === true) {
-                    const id = recordset['recordset'][0].ID
+                    id = recordset['recordset'][0].ID
+
                     const token = jwt.sign({ id }, "jwtSecret", {
                         expiresIn: 300
                     })
-                    // res.send({message:"user logged in",user:recordset['recordset'][0]})
 
-                    res.json({ auth: true, token: token, result: recordset['recordset'][0].ID})
+
+                    res.json({ auth: true, token: token, result: recordset['recordset'][0].ID })
 
                 }
 
@@ -140,7 +178,57 @@ app.post("/login", (req, res) => {
         }
 
     })
+
+
+
+
 })
+
+
+app.post('/form/question', (req, res) => {
+    var request = new sql.Request()
+    const Question_number = req.body.Ques_no
+    const form_id = req.body.form_id
+    const label = req.body.label
+    console.log(req.body)
+    if (label == '') {
+        const Question_type = req.body.type
+        console.log("without label")
+
+        request.query(`INSERT INTO [Hyperian].[dbo].[Questions] ( Question_number, Question_type,Form_id) VALUES('${Question_number}', (SELECT  Question_code FROM [Hyperian].[dbo].[Question_type]  WHERE Question_type = '${Question_type}'),${form_id})`, function (err, recordset) {
+
+            if (err) {
+                console.log(err)
+            }
+            else {
+                console.log('success')
+            }
+
+        })
+
+
+    }
+    else {
+        console.log("with label")
+        request.query(`UPDATE [Hyperian].[dbo].[Questions] set Question_text='${label}' where Form_id='${form_id}' and Question_number='${Question_number}'`, function (err, recordset) {
+
+            if (err) {
+                console.log(err)
+            }
+            else {
+                console.log('success')
+            }
+
+        })
+
+
+    }
+
+
+})
+
+
+
 
 app.listen(9000, () => {
     console.log("listening to port 9000")
