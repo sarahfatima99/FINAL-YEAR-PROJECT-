@@ -147,7 +147,7 @@ app.post("/login", (req, res) => {
     var form_id = 0;
 
     request.query(`select * from  [Hyperian].[dbo].[Users] where Email = '${email}'`, function (err, recordset) {
-
+       console.log(recordset)
         if (recordset['recordset'][0]) {
 
 

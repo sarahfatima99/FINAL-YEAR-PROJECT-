@@ -45,25 +45,27 @@ export const SingleLine = (props) => {
 
     return (
         <div>
+            <center>
             <form onSubmit=
                 {e =>
                     e.preventDefault()
-                }
-            >
-                {editable ?
-                    <input type="textarea"
-                        rows="44"
-                        cols="15"
-                        enabled="true"
-                        value={label}
-                        onChange={handleChange} /> :
-                    <lable>
-                        {label}
-                    </lable>
-                }
+                }>
 
-                <br />
-                <input placeholder='enter text' />
+                {
+                    editable ?
+                        <input type="textarea"
+                            rows="44"
+                            cols="15"
+                            enabled="true"
+                            value={label}
+                            placeholder='Enter Question' 
+                            onChange={handleChange} /> :
+                        <lable>
+                            {label}
+                        </lable>
+                }
+                <br style={{margin: "5px"}} />
+                <input placeholder='Enter Answer'/>
                 <br />
 
                 <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
@@ -74,6 +76,7 @@ export const SingleLine = (props) => {
                     }
                 </button>
             </form>
+            </center>
         </div>
     );
 
@@ -144,14 +147,15 @@ export const RadioButton = (props) => {
     }
     return (
         <div>
+            <center>
             <form onSubmit={e => e.preventDefault()}>
 
                 {
                     editable ?
-                        <input type="textarea" rows="44"
+                        <input type="textarea" rows="44" style={{margin:"5px"}}
                             cols="15"
                             value={label}
-                            placeholder="enter your lable"
+                            placeholder="Enter your Question "
                             onChange={handleChange}
                         /> :
                         <lable>
@@ -160,46 +164,48 @@ export const RadioButton = (props) => {
                 }
 
 
-                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
-                    {
-                        editable ?
-                            <p > done</p>
-                            :
-                            <p >  edit</p>
-                    }
-
-
-
-                </button>
                 {
                     optionsList != null ?
 
                         optionsList.map((item, key) => {
                             return (
-                                <div>
+                                <div style={{display:"flex",alignItems:"center" ,justifyContent:"space-around"}}>
                                     <input type="radio"
                                         id="css"
                                         name="fav_language"
                                         value="CSS" />
-                                    <label for="css">
+                                    <label  for="css">
                                         {item.name}
                                     </label>
                                     <br />
                                 </div>)
                         }) : null
                 }
+               
                 {
                     options ?
-                        <input type="textarea"
+                    <center>
+                        <input  style={{margin:"5px" ,textAlign:"center"}} type="textarea" placeholder='Enter Options'
                             rows="44"
                             cols="15"
                             onKeyDown={handleKeyDown}
-                        /> :
+                        /> 
+                        </center>:
                         null
                 }
-                <button onClick={() => setOptions(true)}>add options</button>
-            </form>
+                {/* <button onClick={() => setOptions(true)}>Add Options</button> */}
+                <button style={{textAlign:"right"}}className='button'  onClick={handleClick}>
+                    {
+                        editable ?
+                            <p  style={{margin:"5px",textAlign:"right"}} > Done</p> :
+                            <p  style={{margin:"5px",textAlign:"right"}}>  Edit Question</p>
+                    }
 
+
+
+                </button>
+            </form>
+            </center>
         </div>
     )
 }
@@ -210,14 +216,13 @@ export const RadioButton = (props) => {
 export const TextMultiLine = (prpos) => {
 
     return (
-
+        <center>
         <form>
-            <label>Enter yourname:
-
-            </label>
-            <input type="textarea" rows="14" cols="15" />
+        <input type="textarea" rows="14" cols="15" placeholder='Enter Question' />
+            <input type="textarea" rows="14" cols="15" placeholder='Enter Answer' />
 
         </form>
+        </center>
 
     )
 }
@@ -284,63 +289,72 @@ export const SingleChoiceAllVisible = (props) => {
         }
 
     }
+
+
     return (
         <div>
+            <center>
             <form onSubmit={e => e.preventDefault()}>
 
                 {
                     editable ?
-                        <input type="textarea" rows="44"
+                        <input type="textarea" rows="44" style={{margin:"5px"}}
                             cols="15"
                             value={label}
-                            placeholder="enter your lable"
+                            placeholder="Enter your Question "
                             onChange={handleChange}
                         /> :
                         <lable>
                             {label}
                         </lable>
                 }
+                {
+                    optionsList != null ?
 
-
-                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
-                    {
-                        editable ?
-                            <p > done</p>
-                            :
-                            <p >  edit</p>
-                    }
-
-                </button>
-
-                <select>
-
-                    {
-                        optionsList != null ?
-
-                            optionsList.map((item, key) => {
-                                return (
-
-
-
-                                        <option value="volvo">{item.name}</option>
+                        optionsList.map((item, key) => {
+                            return (
+                                <div style={{display:"flex",alignItems:"center" ,justifyContent:"space-around"}}>
+                                   <ol id='css' name="fav_language" value="CSS">
+                                   
+                                       </ol> 
+                                    {/* <input type="radio"
+                                        id="css"
+                                        name="fav_language"
+                                        value="CSS" /> */}
                                   
-                                )
-                            }) : null
-                    }
+                                  <label  for="css">
+                                        {item.name}
+                                    </label>
+                                    <br />
+                                </div>)
+                        }) : null
 
-                </select>
+                }
+               
                 {
                     options ?
-                        <input type="textarea"
+                    <center>
+                        <input  style={{margin:"5px" ,textAlign:"center"}} type="textarea" placeholder='Enter Options'
                             rows="44"
                             cols="15"
                             onKeyDown={handleKeyDown}
-                        /> :
+                        /> 
+                        </center>:
                         null
                 }
-                <button onClick={() => setOptions(true)}>add options</button>
-            </form>
+                {/* <button onClick={() => setOptions(true)}>Add Options</button> */}
+                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+                    {
+                        editable ?
+                            <p  style={{margin:"5px",textAlign:"right"}} >Done</p> :
+                            <p  style={{margin:"5px",textAlign:"right"}}> Edit Question</p>
+                    }
 
+
+
+                </button>
+            </form>
+            </center>
         </div>
     )
 }

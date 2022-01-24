@@ -90,31 +90,53 @@ const form_id=localStorage.getItem('currentform')
 
 
   return (
-    <div>
-      <form >
-        <label for="questions type">Choose a question type:</label>
 
-        <select value={type}
-          onChange={handleChange}
-        >
-          <option value="">
-            choose question type
+    <div className='example'>
+      <center>
+      <div className='form-title'>
+        
+          <div className='header'>
+        <input placeholder='Untitled form' className='form-name'></input>
+        <input placeholder='add description' className='form-description'/>
+        </div>
+        </div>
+        </center>
+      <center>
+      <form >
+      
+    
+        
+        <label className='nav'>Choose a question type:</label>
+        <select className='subs' value={type} onChange={handleChange}>
+          <option className='options' value="">
+            select from here
           </option>
-          <option value="SINGLE_LINE_QUESTION">
+          <option className='options' value="SINGLE_LINE_QUESTION">
             Single line Question
           </option>
-          <option value="RADIO_BUTTON">
+          <option className='options' value="RADIO_BUTTON">
             Radio buttons
           </option>
-          <option value="SINGLE_CHOICE_ALL_VISIBLE">
+          <option className='options' value="SINGLE_CHOICE_ALL_VISIBLE">
             Single choice All visible
           </option>
-          <option value="TEXT_MULTIPLE_LINE">
+          <option className='options' value="TEXT_MULTIPLE_LINE">
             Text multiple line
           </option>
         </select>
 
-      </form>
+       
+        
+      
+       
+    
+    
+    <div style={{clear:"both"}}></div>
+    
+
+</form>
+</center>
+   
 
       {
         fieldList.map((item, key) => {
