@@ -49,7 +49,7 @@ const LoginForm = () => {
   const userAuthenticated=()=>{
     
 
-    axios.get("http://localhost:9000/isUserAuth",{headers:{
+    axios.get("http://localhost:9000/login/isUserAuth",{headers:{
       "x-access-token":localStorage.getItem("token")
       
 

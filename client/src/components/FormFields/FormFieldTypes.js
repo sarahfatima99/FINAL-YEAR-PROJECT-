@@ -10,6 +10,8 @@ export const SingleLine = (props) => {
         setLabel(e.target.value)
 
     }
+
+    
     const handleClick = e => {
         e.preventDefault()
 
