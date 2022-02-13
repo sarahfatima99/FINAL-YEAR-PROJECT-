@@ -1,48 +1,14 @@
 import React, { useState, useReducer } from 'react'
 import './FromFields.css';
 import { SingleLine, RadioButton, SingleChoiceAllVisible, TextMultiLine } from './FormFieldTypes';
-import Header, { NavLink, NavLinks, PrimaryLink, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light";
-import background from "../../images/back.jpg";
-import tw from "twin.macro";
-import styled from "styled-components";
 
 
-const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`;
-const StyledHeader = styled(Header)`
-  ${tw`pt-8 max-w-none`}
-  ${DesktopNavLinks} ${NavLink}, ${LogoLink} {
-    ${tw`text-green-600 hover:border-gray-700 hover:text-green-800`}
-  }
-  ${NavToggle}.closed {
-    ${tw`text-gray-400 hover:text-blue-500`}
-  }
-`;
-const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-purple-100 opacity-25`;
 
-const navLinks = [
-  <NavLinks key={1}>
-    <NavLink href="#">
-      Home
-    </NavLink>
-    <NavLink href="#">
-      ContactUs
-    </NavLink>
-    <NavLink href="#">
-      Templates
-    </NavLink>
-    <NavLink to="/signup">
-      AboutUs
-    </NavLink>
-  </NavLinks>,
-  <NavLink  >
-    <PrimaryLink  href="/signup">
-      Log in
-    </PrimaryLink>
-    <PrimaryLink style={{marginLeft:"10px"}}  href="/createform">
-       Create Form
-    </PrimaryLink>
-  </NavLink>
-];
+
+
+
+
+
 
 function FormFields() {
  
