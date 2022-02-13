@@ -13,7 +13,7 @@ export class Home extends Component {
                 <BackgroundAsImage />
                 <ThreeColSimple />
                 <TwoColSingleFeatureWithStats2 />
-                <SliderCard />
+                {/* <SliderCard /> */}
                 <Footer />
 
 

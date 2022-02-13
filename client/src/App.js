@@ -1,7 +1,7 @@
 
 import "tailwindcss/dist/base.css";
 import "./styles/globalStyles.css";
-import { AccountBox } from 'components/accountbox';
+import  AccountBox  from 'components/accountbox';
 import {  Route, Routes, Router } from 'react-router-dom';
 import Form from "components/FormFields/Form";
 import Home from 'components/Home'

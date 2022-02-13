@@ -67,6 +67,7 @@ const  SignupForm=()=> {
   }
 
   return (
+    
     <BoxContainer>
       <FormContainer>
         <Input type="text" name="name" value={user.name} placeholder="Full Name" onChange={handleChange} />

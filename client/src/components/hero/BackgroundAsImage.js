@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Typical from 'react-typical';
@@ -6,6 +6,7 @@ import Typical from 'react-typical';
 import Header, { NavLink, NavLinks, PrimaryLink, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light";
 import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 
+import AccountBox from "../accountbox/index.js";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none`}
@@ -48,7 +49,27 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
   }
 `;
 
+
+const Button  = styled.button`
+min-width: 100px;
+padding: 16px 32px;
+border-radius:4px;
+border:none;
+background: #141414;
+color: #fff;
+font-size:24px;
+cursor: pointer;
+
+`
+
 export default () => {
+
+  const [showModal,setshowModal] = useState(false);
+
+  const openModal = () =>{
+    console.log("Hello") ;
+    setshowModal(prev => !prev);
+  }
   const navLinks = [
     <NavLinks key={1}>
       <NavLink href="#">
@@ -65,9 +86,10 @@ export default () => {
       </NavLink>
     </NavLinks>,
     <NavLink  >
-      <PrimaryLink  href="/signup">
+      <PrimaryLink onClick={openModal}>
         Log in
       </PrimaryLink>
+      
       <PrimaryLink style={{marginLeft:"10px"}}  href="/createform">
          Create Form
       </PrimaryLink>
@@ -75,7 +97,11 @@ export default () => {
   ];
 
   return (
+    <>
+  
+   
     <Container>
+    <AccountBox  showModal={showModal} setshowModal={setshowModal}/>
       <OpacityOverlay />
       <HeroContainer>
         <StyledHeader links={navLinks} />
@@ -102,5 +128,6 @@ export default () => {
         </TwoColumn>
       </HeroContainer>
     </Container>
+    </>
   );
 };
