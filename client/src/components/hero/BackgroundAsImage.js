@@ -7,6 +7,7 @@ import Header, { NavLink, NavLinks, PrimaryLink, LogoLink, NavToggle, DesktopNav
 import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 
 import AccountBox from "../accountbox/index.js";
+import FormModal from "../accountbox/FormModal.js";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none`}
@@ -50,26 +51,22 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 `;
 
 
-const Button  = styled.button`
-min-width: 100px;
-padding: 16px 32px;
-border-radius:4px;
-border:none;
-background: #141414;
-color: #fff;
-font-size:24px;
-cursor: pointer;
 
-`
 
 export default () => {
 
   const [showModal,setshowModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const openModal = () =>{
-    console.log("Hello") ;
+    
     setshowModal(prev => !prev);
   }
+  const openCreateModal = () =>{
+    setShowCreateModal(prev => !prev);
+  }
+
+
   const navLinks = [
     <NavLinks key={1}>
       <NavLink href="#">
@@ -90,7 +87,7 @@ export default () => {
         Log in
       </PrimaryLink>
       
-      <PrimaryLink style={{marginLeft:"10px"}}  href="/createform">
+      <PrimaryLink style={{marginLeft:"10px"}} onClick={openCreateModal}>
          Create Form
       </PrimaryLink>
     </NavLink>
@@ -102,6 +99,9 @@ export default () => {
    
     <Container>
     <AccountBox  showModal={showModal} setshowModal={setshowModal}/>
+    <FormModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal}/>
+
+
       <OpacityOverlay />
       <HeroContainer>
         <StyledHeader links={navLinks} />
