@@ -9,12 +9,12 @@ import {MdClose} from "react-icons/md";
 import {useSpring,animated } from "react-spring";
 
 const Background = styled.div`
-width: 100vw;
-height:100vh;
+width: 120%;
+height:110%;
 background:rgba(0,0,0,0.8);
 position:fixed;
 display:flex;
-justify-content:center;
+// justify-content:center;
 align-items:center;
 z-index:100;
 margin: 0% !important;
@@ -22,8 +22,8 @@ padding: 0% !important;`
 
 
 const BoxContainer = styled.div`
-  width: 320px;
-  min-height: 550px;
+  width: 520px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   border-radius: 19px;
@@ -52,11 +52,10 @@ const BackDrop = styled(motion.div)`
   display: flex;
   flex-direction: column;
   border-radius: 50%;
-  transform: rotate(60deg);
-  top: -300px;
-  left: -120px;
-background: rgb(2,0,36);
-background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,108,121,0.984352773826458) 21%, rgba(0,212,255,1) 100%);
+  // transform: rotate(60deg);
+  top: -400px;
+  left: -190px;
+background-color: #48D1CC;
 `;
 
 const HeaderContainer = styled.div`
@@ -69,6 +68,7 @@ const HeaderText = styled.h2`
   font-size: 32px;
   font-weight: 600;
   line-height: 1.24;
+  font:consolas;
   color: #fff;
   z-index: 10;
   margin: 0;
