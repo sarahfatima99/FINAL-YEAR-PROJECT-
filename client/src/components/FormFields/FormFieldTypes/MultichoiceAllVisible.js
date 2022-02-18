@@ -3,7 +3,7 @@ import './FromFields.css'
 import axios from 'axios'
 
 
-export const RadioButton = (props) => {
+export const MultchoiceAllVisible = (props) => {
     const [question, setQuestion] = useState()
     const [options, setOptions] = useState([])
     const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
@@ -92,7 +92,7 @@ export const RadioButton = (props) => {
                         optionsList.map((item, key) => {
                             return (
                                 <div style={{display:"flex",alignItems:"center" ,justifyContent:"space-around"}}>
-                                    <input type="radio"
+                                    <input type="checkbox"
                                         id="css"
                                         name="fav_language"
                                         value="CSS" />

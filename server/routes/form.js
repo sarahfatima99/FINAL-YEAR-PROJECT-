@@ -42,13 +42,15 @@ router.post('/question', (req, res) => {
         const Question_type = req.body.type
         console.log("without label") 
 
-        request.query(`INSERT INTO [Hyperian].[dbo].[Questions] ( Question_number, Question_type,Form_id) VALUES('${Question_number}', (SELECT  Question_code FROM [Hyperian].[dbo].[Question_type]  WHERE Question_type = '${Question_type}'),${form_id})`, function (err, recordset) {
+        request.query(`INSERT INTO [Hyperian].[dbo].[Questions] ( Question_number, Question_type,Form_id) OUTPUT Inserted.Question_id VALUES('${Question_number}', (SELECT  Question_code FROM [Hyperian].[dbo].[Question_type]  WHERE Question_type = '${Question_type}'),${form_id})`, function (err, recordset) {
 
             if (err) {
                 console.log(err)
             }
             else {
-                console.log('success')
+                console.log('success',recordset)
+                res.send({ques_id:recordset['recordset'][0].Question_id})
+            
             }
 
         })
@@ -64,6 +66,7 @@ router.post('/question', (req, res) => {
             }
             else {
                 console.log('success')
+
             }
 
         })

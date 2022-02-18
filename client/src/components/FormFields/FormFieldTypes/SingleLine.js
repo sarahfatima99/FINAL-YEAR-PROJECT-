@@ -1,3 +1,6 @@
+import React, { useState } from 'react'
+import './FromFields.css'
+import axios from 'axios'
 export const SingleLine = (props) => {
     const [label, setLabel] = useState()
     const [editable, setEditable] = useState(true)
