@@ -1,11 +1,48 @@
 import React, { useState } from 'react'
 import './FromFields.css'
-export const SingleLine = () => {
+import axios from 'axios'
+export const SingleLine = (props) => {
     const [label, setLabel] = useState()
     const [editable, setEditable] = useState(true)
+    const [question, setQuestion] = useState()
     const [count, setCount] = useState(true);
     const handleChange = e => {
         setLabel(e.target.value)
+
+    }
+
+    
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
     }
 
     return (
@@ -32,8 +69,8 @@ export const SingleLine = () => {
                 <br style={{margin: "5px"}} />
                 <input placeholder='Enter Answer'/>
                 <br />
-            
-                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+
+                <button style={{ textAlign: "right" }} className='button' onClick={handleClick}>
                     {
                         editable ?
                             <p > done</p> :
@@ -49,13 +86,8 @@ export const SingleLine = () => {
 
 }
 
-export const RadioButton = () => {
-
-
-
-
-
-
+export const RadioButton = (props) => {
+    const [question, setQuestion] = useState()
     const [options, setOptions] = useState([])
     const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
     const [optionsList, setOptionsList] = useState([])
@@ -66,6 +98,42 @@ export const RadioButton = () => {
         setLabel(e.target.value)
     }
 
+
+
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
+    }
+
     const handleKeyDown = e => {
         if (e.key == 'Enter') {
             // setOptions(false)
@@ -74,13 +142,11 @@ export const RadioButton = () => {
             {
                 name: e.target.value
             }])
-            e.target.value=""
+            e.target.value = ""
             console.log(optionsList)
         }
 
     }
-
-
     return (
         <div>
             <center>
@@ -98,6 +164,8 @@ export const RadioButton = () => {
                             {label}
                         </lable>
                 }
+
+
                 {
                     optionsList != null ?
 
@@ -114,7 +182,6 @@ export const RadioButton = () => {
                                     <br />
                                 </div>)
                         }) : null
-
                 }
                
                 {
@@ -129,7 +196,7 @@ export const RadioButton = () => {
                         null
                 }
                 {/* <button onClick={() => setOptions(true)}>Add Options</button> */}
-                <button style={{textAlign:"right"}}className='button' onClick={() => setEditable(!editable)}>
+                <button style={{textAlign:"right"}}className='button'  onClick={handleClick}>
                     {
                         editable ?
                             <p  style={{margin:"5px",textAlign:"right"}} > Done</p> :
@@ -145,7 +212,10 @@ export const RadioButton = () => {
     )
 }
 
-export const TextMultiLine = () => {
+
+
+
+export const TextMultiLine = (prpos) => {
 
     return (
         <center>
@@ -159,7 +229,9 @@ export const TextMultiLine = () => {
     )
 }
 
-export const SingleChoiceAllVisible = () => {
+export const SingleChoiceAllVisible = (props) => {
+
+    const [question, setQuestion] = useState()
     const [options, setOptions] = useState([])
     const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
     const [optionsList, setOptionsList] = useState([])
@@ -170,6 +242,42 @@ export const SingleChoiceAllVisible = () => {
         setLabel(e.target.value)
     }
 
+
+
+    const handleClick = e => {
+        e.preventDefault()
+
+        setEditable(!editable)
+        if (editable && label) {
+            setQuestion(props.Ques_no)
+            update_ques_text()
+        }
+    }
+
+
+
+    const update_ques_text = () => {
+
+        const quest_no = props.Ques_no
+        const form_id = localStorage.getItem('currentform')
+        const Ques_data = {
+            Ques_no: quest_no,
+            label: label,
+            form_id: form_id
+        }
+        axios.post("http://localhost:9000/form/question", Ques_data)
+            .then((res) => {
+                if (res.data.message) {
+                    console.log(res.data.message)
+                }
+                else {
+                    console.log("err")
+                }
+
+            })
+
+    }
+
     const handleKeyDown = e => {
         if (e.key == 'Enter') {
             // setOptions(false)
@@ -178,7 +286,7 @@ export const SingleChoiceAllVisible = () => {
             {
                 name: e.target.value
             }])
-            e.target.value=""
+            e.target.value = ""
             console.log(optionsList)
         }
 

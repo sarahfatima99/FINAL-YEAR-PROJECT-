@@ -1,10 +1,26 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import styled from "styled-components";
 import  LoginForm  from "./loginForm";
 import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 import  SignupForm from "./signupForm";
 import axios from "axios";
+import {MdClose} from "react-icons/md";
+import {useSpring,animated } from "react-spring";
+
+const Background = styled.div`
+width: 100vw;
+height:100vh;
+background:rgba(0,0,0,0.8);
+position:fixed;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:100;
+margin: 0% !important;
+padding: 0% !important;`
+
+
 const BoxContainer = styled.div`
   width: 320px;
   min-height: 550px;
@@ -39,8 +55,8 @@ const BackDrop = styled(motion.div)`
   transform: rotate(60deg);
   top: -300px;
   left: -120px;
-background: rgb(2,0,36);
-background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,108,121,0.984352773826458) 21%, rgba(0,212,255,1) 100%);
+// background: rgb(2,0,36);
+background: #48D1CC;
 `;
 
 const HeaderContainer = styled.div`
@@ -72,7 +88,17 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 1.8em;
-`;
+`
+const CloseModalButton = styled(MdClose)`
+cursor: pointer;
+position: absolute;
+top:20px;
+right:20px;
+width:32px;
+height:32px;
+padding:0;
+z-index:100;
+`
 
 const backdropVariants = {
   expanded: {
@@ -96,12 +122,23 @@ const expandingTransition = {
 };
 
 
-export function AccountBox(props) {
+const AccountBox = ({showModal, setshowModal}) => {
+const modalRef = useRef();
+
+
   useEffect(() => {
     axios.get('http://localhost:9000/signup').then((res) => {
-       console.log(res)
+       
     })
   });
+
+  const animation = useSpring({
+    config: {
+        duration: 250
+    },
+    opacity: showModal ? 1 : 0,
+    transform: showModal ? `translateY(0%)` : `translateY(-100%)`
+});
   
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signin");
@@ -130,9 +167,14 @@ export function AccountBox(props) {
   const contextValue = { switchToSignup, switchToSignin };
 
   return (
-    <AccountContext.Provider value={contextValue}>
+    <>
+    {showModal ? (
+     <AccountContext.Provider value={contextValue}>
+      <Background>
+      <animated.div style={animation}>
       <BoxContainer >
-        <TopContainer>
+
+      <TopContainer>
           <BackDrop
             initial={false}
             animate={isExpanded ? "expanded" : "collapsed"}
@@ -154,11 +196,25 @@ export function AccountBox(props) {
             </HeaderContainer>
           )}
         </TopContainer>
-        <InnerContainer>
+
+          <InnerContainer>
           {active === "signin" && <LoginForm />}
           {active === "signup" && <SignupForm />}
         </InnerContainer>
+
+      <CloseModalButton aria-label='Close Modal' onClick={() =>{ setshowModal(prev => !prev)}}/>
       </BoxContainer>
-    </AccountContext.Provider>
-  );
-}
+      </animated.div>
+      </Background>
+      </AccountContext.Provider>
+
+    ): null }
+    
+      
+        
+      
+     
+    
+    </>  );
+      }
+export default AccountBox;

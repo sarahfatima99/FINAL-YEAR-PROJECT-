@@ -4,6 +4,7 @@ import ThreeColSimple from '../components/features/ThreeColSimple';
 import TwoColSingleFeatureWithStats2 from './features/TwoColSingleFeatureWithStats2';
 import SliderCard from './cards/ThreeColSlider';
 import Footer from "./footers/MiniCenteredFooter";
+import "./Home.css";
 
 export class Home extends Component {
     render() {
@@ -13,7 +14,7 @@ export class Home extends Component {
                 <BackgroundAsImage />
                 <ThreeColSimple />
                 <TwoColSingleFeatureWithStats2 />
-                <SliderCard />
+                {/* <SliderCard /> */}
                 <Footer />
 
 
