@@ -115,7 +115,7 @@ export default () => {
                    </span>
              
               <br />
-              {/* <SlantedBackground>.</SlantedBackground> */}
+             
             </Heading>
             <PrimaryAction>Get Started</PrimaryAction>
           </LeftColumn>
