@@ -1,10 +1,17 @@
+import React, { useState } from 'react'
+import './FromFields.css'
+import axios from 'axios'
+
+
 export const RadioButton = (props) => {
     const [question, setQuestion] = useState()
     const [options, setOptions] = useState([])
+    const list = [{ name: 'yoo' }, { name: 'hii' }, { name: 'yoo' }]
     const [optionsList, setOptionsList] = useState([])
     const [label, setLabel] = useState()
     const [editable, setEditable] = useState(true)
-    
+    const [count, setCount] = useState(true);
+    const [ques_id,setQues_id]=useState()
     const handleChange = e => {
         setLabel(e.target.value)
     }
@@ -21,8 +28,6 @@ export const RadioButton = (props) => {
         }
     }
 
-
-
     const update_ques_text = () => {
 
         const quest_no = props.Ques_no
@@ -30,16 +35,18 @@ export const RadioButton = (props) => {
         const Ques_data = {
             Ques_no: quest_no,
             label: label,
-            form_id: form_id,
-            optionsList=optionsList
+            form_id: form_id
         }
         axios.post("http://localhost:9000/form/question", Ques_data)
+    
             .then((res) => {
+                // console.log(res.data.Question_id, "hello")
+                setQues_id(res.dara.Question_id)
                 if (res.data.message) {
                     console.log(res.data.message)
                 }
                 else {
-                    console.log("err")
+                    console.log("err",res.data.message)
                 }
 
             })
@@ -54,6 +61,7 @@ export const RadioButton = (props) => {
             {
                 name: e.target.value
             }])
+
             e.target.value = ""
             console.log(optionsList)
         }
@@ -62,7 +70,7 @@ export const RadioButton = (props) => {
     return (
         <div>
             <center>
-            <form onSubmit={e => e.preventDefault()}>
+            <form onSubmit={e => e.preventDefault()} >
 
                 {
                     editable ?
