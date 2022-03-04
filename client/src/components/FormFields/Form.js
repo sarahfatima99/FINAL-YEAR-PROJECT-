@@ -1,6 +1,7 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import FormFields from './FormFields'
 import axios from 'axios';
+import Navbar from 'components/Navbar/Navbar';
 
 
 
@@ -13,6 +14,7 @@ const Form = () =>{
             console.log(d);
     }
     return(<>
+    <Navbar/>
     <div className='container-fluid'>
         <div className='row'>
             <div className='col-lg-3  col-12' style={{border:"2px solid rgb(220, 220, 220)",boxShadow:"rgba(0, 0, 0, 0.16) 0px 1px 4px"}}>
