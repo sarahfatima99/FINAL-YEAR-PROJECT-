@@ -49,7 +49,7 @@ const LoginForm = () => {
   const userAuthenticated=()=>{
     
 
-    axios.get("http://localhost:9000/isUserAuth",{headers:{
+    axios.get("http://localhost:9000/login/isUserAuth",{headers:{
       "x-access-token":localStorage.getItem("token")
       
 
@@ -74,12 +74,34 @@ const LoginForm = () => {
         console.log(res.data)
         localStorage.setItem("token",res.data.token)
         localStorage.setItem("userinfo",res.data.result)
+       
         setLogininStatus(true)
         userAuthenticated()
-
+        // get_payload()
       }
     })
-      // .then(res => alert(res.data.message))
+  }
+
+  const get_payload=()=>{
+    const user_id=localStorage.getItem("userinfo")
+    console.log("user id :",user_id)
+    axios.get("http://localhost:9000/user_payload", {
+      params: {
+       user_id:user_id
+      }
+    })
+    .then((res)=>{
+      console.log(res.data)
+      if(!res.data.form_id){
+        console.log("no forms yet")
+      }
+      
+      else{
+        console.log(res.data.form_id)
+        localStorage.setItem("forminfo",res.data.form_id)
+      }
+
+    })
 
   }
 
@@ -87,6 +109,7 @@ const LoginForm = () => {
 
 
   return (
+  
     <BoxContainer>
       <FormContainer>
         <Input type="email" name="email" value={user.email} placeholder="Email" onChange={handleChange} />

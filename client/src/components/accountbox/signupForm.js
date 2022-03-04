@@ -14,13 +14,14 @@ import {
   Google_banner,
   Span_text, Facebook_banner,
 } from "./common";
+import {  useNavigate } from 'react-router-dom';
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
 
 
 const  SignupForm=()=> {
 
-
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -47,11 +48,17 @@ const  SignupForm=()=> {
     }
 
     const Register=()=>{
+      
       const{name,email,password,reEnterPassword}=user
       
       if(name && email && password && (password==reEnterPassword)){
         axios.post("http://localhost:9000/register",user)
-       .then(res => alert(res.data.message))
+       .then(res => {
+         if(res.data.id){
+           console.log(res.data.id)
+         }
+       })
+       navigate('/')
       }
       else{
         alert("invalid input")
@@ -60,6 +67,7 @@ const  SignupForm=()=> {
   }
 
   return (
+    
     <BoxContainer>
       <FormContainer>
         <Input type="text" name="name" value={user.name} placeholder="Full Name" onChange={handleChange} />
